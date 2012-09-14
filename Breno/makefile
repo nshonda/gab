@@ -1,11 +1,12 @@
-CLIENT=OlaMundoClient
-SERVER=OlaMundoServer
-IMPL=OlaMundoImpl
-INTERFACE=OlaMundoInterface
+CLIENT=PaintClient
+SERVER=PaintServer
+IMPL=PaintImpl
+INTERFACE=PaintInterface
 
 default:
 	javac *.java
 	rmic $(IMPL)
+	rmiregistry &
 
 server:
 	java -Djava.security.policy=java.policy $(SERVER)
