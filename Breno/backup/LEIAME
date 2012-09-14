@@ -1,0 +1,36 @@
+LEIAME
+======
+
+Este arquivo descreve como compilar e executar o exemplo 5,
+de Java RMI, para ser executado em uma única máquina.
+Os comandos dos passos a seguir são executados em um mesmo diretório:
+
+É importante que para executar o javac, rmic e rmiregistry,
+deve-se ter instalado localmente uma versão da JDK. Procurar no 
+google: download jdk 1.5.0 linux
+
+Passo 1: Compilar os .java
+==========================
+user@local ~/example5$ javac *.java
+
+
+Passo 2: Geração do Stub da Implementação
+=========================================
+user@local ~/example5$ rmic OlaMundoImpl
+
+
+Passo 3: Execução do rmiregistry (execução local)
+================================
+user@local ~/example5$ rmiregistry &
+
+
+Passo 4: Execução  do servidor (execução local)
+==============================================
+user@local ~/example5$ java -Djava.security.policy=java.policy OlaMundoServer
+Nota: O programa ficará executando. Portanto, utilize outro
+terminal para executar o próximo passo)
+
+Passo 5: Execução  do cliente, ou clientes (execução local)
+==========================================================
+user@local ~/example5$ java -Djava.security.policy=java.policy OlaMundoClient
+
