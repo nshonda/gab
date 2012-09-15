@@ -16,3 +16,7 @@ client:
 
 clean:
 	$(RM) *.class
+teste:
+	javac classes/*.java
+	javac PaintClient.java
+	java PaintClient

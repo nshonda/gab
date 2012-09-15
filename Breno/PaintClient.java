@@ -33,7 +33,6 @@ import java.util.*;						/* #TODO: Ver documentação do JAVA */
 import java.awt.BorderLayout;			/* #TODO: Ver documentação do JAVA */
 import javax.swing.JFrame;				/* #TODO: Ver documentação do JAVA */
 import javax.swing.JLabel;				/* #TODO: Ver documentação do JAVA */
-import javax.swing.JFrame;				/* #TODO: Ver documentação do JAVA */
 import java.awt.Toolkit;				/* #TODO: Ver documentação do JAVA */
 import classes.*;						/* Importa todas as classes localizadas na pasta classes */
 

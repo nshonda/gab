@@ -24,22 +24,27 @@
 
 package classes;
 
-import java.awt.BasicStroke;        /* #TODO: Ver documentação do JAVA */
-import java.awt.Color;              /* #TODO: Ver documentação do JAVA */
-import java.awt.Graphics;           /* #TODO: Ver documentação do JAVA */
-import java.awt.Graphics2D;         /* #TODO: Ver documentação do JAVA */
-import java.awt.Point;              /* #TODO: Ver documentação do JAVA */
-import java.awt.event.MouseAdapter; /* #TODO: Ver documentação do JAVA */
-import java.awt.event.MouseEvent;   /* #TODO: Ver documentação do JAVA */
-import java.util.ArrayList;         /* #TODO: Ver documentação do JAVA */
-import java.util.List;              /* #TODO: Ver documentação do JAVA */
-import javax.swing.JPanel;          /* #TODO: Ver documentação do JAVA */
-import java.awt.Font;
-import java.awt.Image;
-import java.awt.Toolkit;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JPanel;
+import java.awt.BasicStroke;            /* #TODO: Ver documentação do JAVA */
+import java.awt.Color;                  /* #TODO: Ver documentação do JAVA */
+import java.awt.Graphics;               /* #TODO: Ver documentação do JAVA */
+import java.awt.Graphics2D;             /* #TODO: Ver documentação do JAVA */
+import java.awt.Point;                  /* #TODO: Ver documentação do JAVA */
+import java.awt.event.MouseAdapter;     /* #TODO: Ver documentação do JAVA */
+import java.awt.event.MouseEvent;       /* #TODO: Ver documentação do JAVA */
+import java.util.ArrayList;             /* #TODO: Ver documentação do JAVA */
+import java.util.List;                  /* #TODO: Ver documentação do JAVA */
+import javax.swing.JPanel;              /* #TODO: Ver documentação do JAVA */
+import java.awt.Font;                   /* #TODO: Ver documentação do JAVA */
+import java.awt.Image;                  /* #TODO: Ver documentação do JAVA */
+import java.awt.Toolkit;                /* #TODO: Ver documentação do JAVA */
+import javax.swing.ImageIcon;           /* #TODO: Ver documentação do JAVA */
+import javax.swing.JButton;             /* #TODO: Ver documentação do JAVA */
+import javax.swing.JPanel;              /* #TODO: Ver documentação do JAVA */
+import javax.swing.JFrame;              /* #TODO: Ver documentação do JAVA */
+import java.awt.event.ActionListener;   /* #TODO: Ver documentação do JAVA */
+import java.awt.event.ActionEvent;      /* #TODO: Ver documentação do JAVA */
+import javax.swing.*;                   /* #TODO: Ver documentação do JAVA */
+
 /*
     Classe:
         LinePanel
@@ -54,21 +59,21 @@ public class LinePanel extends JPanel
     /* Construtor */
     public LinePanel()
     {
-        setLayout(null);
-        setSize(643, 388);
-        setVisible(true);
-        setBackground(Color.white);
-        
-        
-        JButton _btnCriar = new JButton("Criar");
-        JButton _btnEntrar = new JButton("Entrar");
-        _btnCriar.setFont(new Font("Arial", Font.BOLD, 20));
-        _btnEntrar.setFont(new Font("Arial", Font.BOLD, 20));
-        _btnCriar.setBounds(130, 144, 136, 72);
-        _btnEntrar.setBounds(363, 144, 136, 72);
-        
-        add(_btnCriar);
-        add(_btnEntrar);
+        setLayout(null);            /* Definindo nenhum layout para o Painel        */
+        setSize(643, 388);          /* Definindo o tamanho do Painel                */
+        setVisible(true);           /* Deixando o Painel visível                    */
+        setBackground(Color.white); /* Definindo o plano de fundo com a cor branca  */
+
+        JButton _btnCriar  = new JButton("Criar" );             /* Criando o botão para CRIAR um novo Quadro                    */
+        JButton _btnEntrar = new JButton("Entrar");             /* Criando um botão para ENTRAR em um Quadro já existente       */
+        _btnCriar.setFont (new Font("Arial", Font.BOLD, 20));   /* Define a fonte como Arial, negrito, tamanho 20               */
+        _btnEntrar.setFont(new Font("Arial", Font.BOLD, 20));   /* Define a fonte como Arial, negrito, tamanho 20               */
+        _btnCriar.setBounds (130, 144, 136, 72);                /* Define a posição do botão (x, y, width, height)              */
+        _btnEntrar.setBounds(363, 144, 136, 72);                /* Define a posição do botão (x, y, width, height)              */
+        _btnCriar.addActionListener(new criar());         /* Adiciona funcionalidade de instanciar a classe criarQuadro   */
+        _btnEntrar.addActionListener(new entrar());       /* Adiciona funcionalidade de instanciar a classe criarQuadro   */
+        add(_btnCriar);                                         /* Adiciona o botão ao Painel                                   */
+        add(_btnEntrar);                                        /* Adiciona o botão ao Painel                                   */
 
         // addMouseListener(new MouseAdapter()
         // {
@@ -83,13 +88,35 @@ public class LinePanel extends JPanel
         //         }
         //     }
         // });
-    };
+    }
 
     public void paintComponent(Graphics g) {        
-        super.paintComponent(g);            
-        Image imagem = new ImageIcon(this.getClass().getResource("/classes/Fundo_Paint.jpg")).getImage();  
-        g.drawImage(imagem, 0, 0, this);  
+        super.paintComponent(g);  /* Chama o construtor default da classe pai */
+        Image imagem = new ImageIcon(this.getClass().getResource("/classes/Fundo_Paint.jpg")).getImage(); /* Obtem a imagem */
+        g.drawImage(imagem, 0, 0, this);  /* Insere a imagem como background do Painel */
     }
+
+    private class criar implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            
+            String _nomeDoQuadro;
+            _nomeDoQuadro = JOptionPane.showInputDialog("Insira um nome para o quadro");
+            new criarQuadro(_nomeDoQuadro).setVisible(true);
+        }
+        
+    }
+
+    private class entrar implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            
+        }
+        
+    }
+
     /**
      * Esse método será chamado toda vez que o componente precisar ser repintado.
      * Isso é, quando a janela for parcial ou totalmente escondida e reexibida ou 
