@@ -1,25 +1,25 @@
-/*	
-	Instituição: Universidade Estadual de Londrina
-	Disciplina: Sistemas Operacionais
-	Professor: Fábio Sakuray
-	Bimestre: 3º Bimestre
-	Ano: 2012
-	
-	Autores:
-		Breno Naodi Kusunoki
-		Luiz Guilherme Castilho Martins
-	
-	Tema:
-		Implementar um Paint Compartilhado
-	
-	Descrição:
-			O trabalho consiste em desenvolver uma aplicação em Java
-		onde diversos usuários poderão utilizar o mesmo quadro branco
-		para desenhar linhas, sendo que cada usuário terá a sua linha
-		com uma cor diferenciada dos demais.
-			Casa usuário poderá utilizar um quadro branco já criado,
-		ou criar um novo para que ele possa desenhar, assim disponibi-
-		lizando o mesmo para os demais usuários desenharem.
+/*  
+    Instituição: Universidade Estadual de Londrina
+    Disciplina: Sistemas Operacionais
+    Professor: Fábio Sakuray
+    Bimestre: 3º Bimestre
+    Ano: 2012
+    
+    Autores:
+        Breno Naodi Kusunoki
+        Luiz Guilherme Castilho Martins
+    
+    Tema:
+        Implementar um Paint Compartilhado
+    
+    Descrição:
+            O trabalho consiste em desenvolver uma aplicação em Java
+        onde diversos usuários poderão utilizar o mesmo quadro branco
+        para desenhar linhas, sendo que cada usuário terá a sua linha
+        com uma cor diferenciada dos demais.
+            Casa usuário poderá utilizar um quadro branco já criado,
+        ou criar um novo para que ele possa desenhar, assim disponibi-
+        lizando o mesmo para os demais usuários desenharem.
 */
 
 
@@ -51,23 +51,23 @@ import java.rmi.RMISecurityManager;
 import java.net.*;
 import java.io.*;
 import java.util.*;
-
+import java.awt.image.BufferedImage;
+import java.awt.image.Raster;
 
 public class Quadro extends JPanel 
 {
-	List<Point> pointList = new ArrayList<Point>();
-	
-	
-	
-	public Quadro() throws Exception
-	{
-		setLayout(null);            /* Definindo nenhum layout para o Painel        */
+    List<Point> pointList = new ArrayList<Point>();
+    BufferedImage _imgRetornado = new BufferedImage(800, 600, BufferedImage.TYPE_INT_RGB);
+    PaintInterface _interface;
+    
+    public Quadro() throws Exception
+    {
+        setLayout(null);            /* Definindo nenhum layout para o Painel        */
         setSize(800, 600);          /* Definindo o tamanho do Painel                */
         setVisible(true);           /* Deixando o Painel visível                    */
         setBackground(Color.white); /* Definindo o plano de fundo com a cor branca  */
 
         System.setSecurityManager(new RMISecurityManager());
-        final PaintInterface _interface;
         _interface = (PaintInterface) Naming.lookup ("rmi://localhost/PaintService");
 
         addMouseListener(new MouseAdapter()
@@ -78,16 +78,19 @@ public class Quadro extends JPanel
                 if (e.getClickCount() == 1)
                 {
                     pointList.add(new Point(e.getX(), e.getY()));
-                    repaint();
+                    //repaint();
                     try
                     {
-                        _interface.getArray("Testando", "Testando");    
+                        System.out.println("Antes do imgRetornado");
+                        _imgRetornado.setRGB(0, 0, 800, 600, _interface.getArray(), 0, 800);  
+                        System.out.println("Antes do repaint()");
+                        repaint();  
+                        System.out.println("Passou no repaint()");
                     }
                     catch(Exception ex)
                     {
                         System.out.println("Entrou no Catch do mouseClicked - Quadro.java");
                     }
-                    
                 }
             }
         });
@@ -96,21 +99,23 @@ public class Quadro extends JPanel
     @Override
     protected void paintComponent(Graphics g)
     {
+
         super.paintComponent(g);
+        g.drawImage(_imgRetornado, 0, 0, this);
         
-        Graphics2D g2d = (Graphics2D) g.create();
+        // Graphics2D g2d = (Graphics2D) g.create();
 
-        if (pointList.size() < 2)
-            return;
+        // if (pointList.size() < 2)
+        //     return;
 
-        Point lastPoint = pointList.get(0);
-        for (int i = 1; i < pointList.size(); i++)
-        {
-            g2d.drawLine(lastPoint.x, lastPoint.y, pointList.get(i).x,
-                    pointList.get(i).y);
-            lastPoint = pointList.get(i);
-        }
+        // Point lastPoint = pointList.get(0);
+        // for (int i = 1; i < pointList.size(); i++)
+        // {
+        //     g2d.drawLine(lastPoint.x, lastPoint.y, pointList.get(i).x,
+        //             pointList.get(i).y);
+        //     lastPoint = pointList.get(i);
+        // }
         
-        g2d.dispose();
+        // g2d.dispose();
     }
 }

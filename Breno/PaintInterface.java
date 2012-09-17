@@ -23,7 +23,13 @@
 */
 
 
+import java.awt.image.BufferedImage;
+import java.awt.image.Raster;
+import java.io.Serializable;
+
+
 public interface PaintInterface extends java.rmi.Remote {
-	public String getArray (String nome, String texto) 
+
+	public int[] getArray () 
 		throws java.rmi.RemoteException;
 }
