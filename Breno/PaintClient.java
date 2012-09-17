@@ -22,6 +22,7 @@
 		lizando o mesmo para os demais usuários desenharem.
 */
 
+
 import java.rmi.Naming; 				/* #TODO: Ver documentação do JAVA */
 import java.rmi.RemoteException; 		/* #TODO: Ver documentação do JAVA */
 import java.net.MalformedURLException; 	/* #TODO: Ver documentação do JAVA */
@@ -34,7 +35,7 @@ import java.awt.BorderLayout;			/* #TODO: Ver documentação do JAVA */
 import javax.swing.JFrame;				/* #TODO: Ver documentação do JAVA */
 import javax.swing.JLabel;				/* #TODO: Ver documentação do JAVA */
 import java.awt.Toolkit;				/* #TODO: Ver documentação do JAVA */
-import classes.*;						/* Importa todas as classes localizadas na pasta classes */
+
 
 /*
 	Classe:
@@ -48,7 +49,7 @@ import classes.*;						/* Importa todas as classes localizadas na pasta classes 
 public class PaintClient extends JFrame{
 	
 	/* Construtor da classe */
-	public PaintClient()
+	public PaintClient() throws Exception
 	{
         setTitle("Paint Distribuído - Versão 1.0");    /* Define o Título da Janela que contêm o JFrame / JPanel */
         setSize(643, 388);    /* Define o tamanho do JFrame */
@@ -60,6 +61,7 @@ public class PaintClient extends JFrame{
 
     /* Onde a brincadeira começa :) */
 	public static void main(String[] args) throws Exception {
+
 		new PaintClient().setVisible(true);    /* Instancia o objeto chamando o construtor */
 	}
 }

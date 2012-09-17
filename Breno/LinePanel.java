@@ -22,7 +22,6 @@
         lizando o mesmo para os demais usuários desenharem.
 */
 
-package classes;
 
 import java.awt.BasicStroke;            /* #TODO: Ver documentação do JAVA */
 import java.awt.Color;                  /* #TODO: Ver documentação do JAVA */
@@ -70,8 +69,8 @@ public class LinePanel extends JPanel
         _btnEntrar.setFont(new Font("Arial", Font.BOLD, 20));   /* Define a fonte como Arial, negrito, tamanho 20               */
         _btnCriar.setBounds (130, 144, 136, 72);                /* Define a posição do botão (x, y, width, height)              */
         _btnEntrar.setBounds(363, 144, 136, 72);                /* Define a posição do botão (x, y, width, height)              */
-        _btnCriar.addActionListener(new criar());         /* Adiciona funcionalidade de instanciar a classe criarQuadro   */
-        _btnEntrar.addActionListener(new entrar());       /* Adiciona funcionalidade de instanciar a classe criarQuadro   */
+        _btnCriar.addActionListener(new criar());               /* Adiciona funcionalidade de instanciar a classe criarQuadro   */
+        _btnEntrar.addActionListener(new entrar());             /* Adiciona funcionalidade de instanciar a classe criarQuadro   */
         add(_btnCriar);                                         /* Adiciona o botão ao Painel                                   */
         add(_btnEntrar);                                        /* Adiciona o botão ao Painel                                   */
 
@@ -92,18 +91,28 @@ public class LinePanel extends JPanel
 
     public void paintComponent(Graphics g) {        
         super.paintComponent(g);  /* Chama o construtor default da classe pai */
-        Image imagem = new ImageIcon(this.getClass().getResource("/classes/Fundo_Paint.jpg")).getImage(); /* Obtem a imagem */
+        Image imagem = new ImageIcon(this.getClass().getResource("Fundo_Paint.jpg")).getImage(); /* Obtem a imagem */
         g.drawImage(imagem, 0, 0, this);  /* Insere a imagem como background do Painel */
     }
 
     private class criar implements ActionListener{
 
         @Override
-        public void actionPerformed(ActionEvent ae) {
+        public void actionPerformed(ActionEvent ae)
+        {
             
             String _nomeDoQuadro;
             _nomeDoQuadro = JOptionPane.showInputDialog("Insira um nome para o quadro");
-            new criarQuadro(_nomeDoQuadro).setVisible(true);
+            
+            try
+            {
+                new criarQuadro(_nomeDoQuadro).setVisible(true);    
+            }
+            catch(Exception e)
+            {
+                System.out.println("Entrou no Catch da classe criar");
+            }
+            
         }
         
     }
