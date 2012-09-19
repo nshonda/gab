@@ -46,15 +46,14 @@ import javax.swing.*;                   /* #TODO: Ver documentação do JAVA */
 import java.io.IOException;
 
 
-
 public class criarQuadro extends JFrame
 {
-	List<Point> pointList = new ArrayList<Point>();
+//	List<Point> pointList = new ArrayList<Point>();
 
 	public criarQuadro(String _nomeDoQuadro, String _nomeDoUsuario) throws Exception
 	{
-		setTitle("Paint Distribuído || Usuário: " + _nomeUsuario + " Quadro: " + _nomeQuadro);    /* Define o Título da Janela que contêm o JFrame / JPanel */
-        setSize(800, 600);    /* Define o tamanho do JFrame */
+		setTitle("Paint Distribuído || Usuário: " + _nomeDoQuadro + " Quadro: " + _nomeDoUsuario);    		/* Define o Título da Janela que contêm o JFrame / JPanel */
+        setSize(800, 600);    																	  		/* Define o tamanho do JFrame */
         setLocation(((Toolkit.getDefaultToolkit().getScreenSize().width  / 2) - (getWidth() / 2)),
                     ((Toolkit.getDefaultToolkit().getScreenSize().height / 2) - (getHeight() / 2)));    /* Inicializa o frame no centro da Tela */
 
@@ -64,8 +63,7 @@ public class criarQuadro extends JFrame
         }
         catch (IOException e)
 		{
-		  // you handle the exception here
-		  System.out.println("Got an IOException: " + e.getMessage());
+		  System.out.println("Entrou no catch do criarQuadro(JFrame): " + e.getMessage());
 		}
         // catch(Exception ex)
         // {

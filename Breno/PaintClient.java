@@ -51,12 +51,12 @@ public class PaintClient extends JFrame{
 	/* Construtor da classe */
 	public PaintClient() throws Exception
 	{
-        setTitle("Paint Distribuído - Versão 1.0");    /* Define o Título da Janela que contêm o JFrame / JPanel */
-        setSize(643, 388);    /* Define o tamanho do JFrame */
+        setTitle("Paint Distribuído - Versão 1.0");    													/* Define o Título da Janela que contêm o JFrame / JPanel 	*/
+        setSize(643, 388);    																			/* Define o tamanho do JFrame 								*/
         setLocation(((Toolkit.getDefaultToolkit().getScreenSize().width  / 2) - (getWidth() / 2)),
-                    ((Toolkit.getDefaultToolkit().getScreenSize().height / 2) - (getHeight() / 2)));    /* Inicializa o frame no centro da Tela */
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);    /* Atribui uma Função do Botão fechar Janela */
-        add(new LinePanel(), BorderLayout.CENTER);    /* Instancia um Painel e o adiciona no JFrame */
+                    ((Toolkit.getDefaultToolkit().getScreenSize().height / 2) - (getHeight() / 2)));    /* Inicializa o frame no centro da Tela 					*/
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);    												/* Atribui uma Função do Botão fechar Janela 				*/
+        add(new LinePanel(), BorderLayout.CENTER);    													/* Instancia um Painel e o adiciona no JFrame 				*/
     }
 
     /* Onde a brincadeira começa :) */

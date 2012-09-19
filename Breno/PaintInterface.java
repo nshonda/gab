@@ -36,8 +36,8 @@ public interface PaintInterface extends java.rmi.Remote {
 	**     0 - Nome do Quadro
 	**     1 - Nome do Usuário
 	*/
-	public int criarQuadro(String, String);
-
+	public int criarQuadro(String _nomeDoQuadro, String _nomeDoUsuario)
+		throws java.rmi.RemoteException;
 	/*
 	** Somente para fins de teste
 	*/

@@ -30,16 +30,17 @@ import javax.swing.JFrame;
 public class PaintServer extends JFrame {
 	public PaintServer () throws Exception {
 		System.out.println ("Iniciando o Servidor Paint...");
-		System.setSecurityManager(new RMISecurityManager());
+		System.setSecurityManager(new RMISecurityManager());	 /* Fornece a segurança necessária para que as chamadas de métodos sejam feitas */
+		System.out.println ("Instanciando objeto remoto...");    
+		PaintInterface _paint = new PaintImpl();				 /* Efetuando a Instância do Objeto Remoto */
 
-		System.out.println ("Instanciando objeto remoto...");    /* Efetuando a Instância do Objeto Remoto */
-		PaintInterface _paint = new PaintImpl();
-
-		/* localhost eh o endereco do servidor,
-		 * PaintService eh o nome que sera dado ao objeto */
+		/*
+		** localhost eh o endereco do servidor,
+		** PaintService eh o nome que sera dado ao objeto.
+		*/
 		Naming.rebind ("rmi://localhost/PaintService", _paint);
 
-		/* A partir daqui, o programa fica aguardando chamadas remotas*/
+		/* A partir daqui, o programa fica aguardando chamadas remotas */
 		System.out.println ("Objeto " + _paint + " aguardando chamadas...");
 	}
 

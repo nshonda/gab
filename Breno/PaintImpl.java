@@ -55,38 +55,71 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
-import java.awt.image.Raster;
+import java.util.Hashtable;
 
 public class PaintImpl extends java.rmi.server.UnicastRemoteObject implements PaintInterface {
 
 	BufferedImage off_Image = new BufferedImage(800, 600, BufferedImage.TYPE_INT_RGB);
 	Graphics2D g2d = off_Image.createGraphics();
-	ArrayList<Quadro> quadros = new ArrayList<Quadro>();
+	Hashtable<String, Quadro> quadros = new Hashtable<String, Quadro>();
 	
-
 	private class Quadro 
 	{
-		private HashTable <String, Usuario> usuarios;    /* Quantidade de Usuários no Quadro */
-		public BufferedImagem imagemDoQuadro;
-		public class Usuario 
-		{
-			Color corDoTraco = null;
-			Point ultimoPonto = null;
+		Color[] cores;    								/* Vetores de Cores disponíveis para desenhar 						   								 */
+		private Hashtable <String, Usuario> usuarios;	/* Quantidade de Usuários no Quadro 								   								 */
+		public BufferedImage imagemDoQuadro;			/* Imagem do quadro, com as retas desenhadas de cada usuário do quadro 								 */
+		public int ultimaCorAtribuida;					/* Última cor atribuída para um usuário, caso o número de usuários exceda 10, haverá cores repetidas */
 
-			Usuario()
+		Quadro()
+		{
+			ultimaCorAtribuida = -1;
+			setCores();  																/* Atribui ao vetor, as cores disponíveis para desenhar no quadro. */
+			usuarios = new Hashtable();													/* Instancia a tabela Hash que armazenará os usuários do quadro.   */
+			imagemDoQuadro = new BufferedImage(800, 600, BufferedImage.TYPE_INT_RGB);	/* Imagem que será compartilhada por todos os usuários do quadro.  */
+		}
+
+		void setCores()
+		{
+			cores = new Color[10]; 
+			cores[0] = Color.BLACK; cores[1] = Color.RED;    cores[2] = Color.BLUE;      cores[3] = Color.GREEN;      cores[4] = Color.ORANGE;
+			cores[5] = Color.PINK;  cores[6] = Color.YELLOW; cores[7] = Color.DARK_GRAY; cores[8] = Color.LIGHT_GRAY; cores[9] = Color.CYAN;
 		}
 	}
+	
+	private class Usuario 
+	{
+		Color corDoTraco;	/* Cor das retas que serão desenhadas pelo usuário. */
+		Point ultimoPonto;	/* Último ponto que foi desenhado no Quadro 		*/
+
+		Usuario(Color corEscolhida)
+		{
+			corDoTraco = corEscolhida;		/* Atribui uma cor que esteja disponível 													*/
+			//ultimoPonto.setLocation(x,y);	/* Guarda o último ponto desenllhado para dar continuidade no desenho no próximo clique. 	*/
+		}
+	}
+
+	public int criarQuadro(String _nomeDoQuadro, String _nomeDoUsuario)
+    {
+    	try
+    	{
+	    	Quadro quadroCriado = new Quadro();											/* Instancia um novo quadro 							*/
+	    	quadroCriado.ultimaCorAtribuida = quadroCriado.ultimaCorAtribuida + 1;  /* Incrementa +1 na última cor atribuída à um usuário 	*/
+	    	Usuario usuarioCriado = new Usuario(quadroCriado.cores[quadroCriado.ultimaCorAtribuida]);	/* Instancia um novo cliente							*/
+	    	
+	    	quadroCriado.usuarios.put(_nomeDoUsuario, usuarioCriado);
+	    	quadros.put(_nomeDoQuadro, quadroCriado);
+	    	return 1;
+    	}
+    	catch(Exception e)
+    	{
+    		return 0;
+    	}
+    }
 
 	public PaintImpl () throws java.rmi.RemoteException 
     {
         super ();
 	}
-
-    public int criarQuadro(String _nomeDoQuadro, String _nomeDoUsuario)
-    {
-
-    	return null; /* Provisório */
-    }
     
 	public int[] getArray (/* Futuramente será o nome do quadro */)
     {
@@ -118,7 +151,7 @@ public class PaintImpl extends java.rmi.server.UnicastRemoteObject implements Pa
         ManipularImagem(BufferedImage imagem)
         {
             _imagemArray = imagem.getRGB(0, 0, 800, 600, _imagemArray, 0, 800);
-        } /* Construtor Vazio */
+        }
 
         int [] getImagem()
         {

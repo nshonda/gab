@@ -90,9 +90,9 @@ public class LinePanel extends JPanel
     }
 
     public void paintComponent(Graphics g) {        
-        super.paintComponent(g);  /* Chama o construtor default da classe pai */
-        Image imagem = new ImageIcon(this.getClass().getResource("Fundo_Paint.jpg")).getImage(); /* Obtem a imagem */
-        g.drawImage(imagem, 0, 0, this);  /* Insere a imagem como background do Painel */
+        super.paintComponent(g);                                                                    /* Chama o construtor default da classe pai     */
+        Image imagem = new ImageIcon(this.getClass().getResource("Fundo_Paint.jpg")).getImage();    /* Obtem a imagem                               */
+        g.drawImage(imagem, 0, 0, this);                                                            /* Insere a imagem como background do Painel    */
     }
 
     private class criar implements ActionListener{

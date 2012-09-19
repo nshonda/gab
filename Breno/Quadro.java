@@ -79,7 +79,7 @@ public class Quadro extends JPanel
         ** para objetos remotos em um registro de um objeto remoto. Passando como parâ-
         ** metro o host onde os métodos remotos estão implementados.
         **
-        ** _interface recebe uma referencia de um objeto do tipo Remote ( é um Stub ) 
+        ** _interface recebe uma referencia de um objeto do tipo Remote ( é um Stub )
         ** e é efetuado um Cast para o tipo PaintInterface, assim podemos efetuar cha-
         ** madas de métodos remotos através desta _interface.
         */
@@ -87,7 +87,7 @@ public class Quadro extends JPanel
 
         _interface.criarQuadro(_nomeDoQuadro, _nomeDoUsuario);
 
-        
+
         (new Thread(new ThreadQueAtualizaQuadro())).start();
 
 
