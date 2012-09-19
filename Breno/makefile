@@ -2,7 +2,7 @@ CLIENT=PaintClient
 SERVER=PaintServer
 IMPL=PaintImpl
 INTERFACE=PaintInterface
-
+REG=rmiregistry
 default:
 	javac *.java
 	rmic $(IMPL)

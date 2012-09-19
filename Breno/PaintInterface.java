@@ -38,9 +38,13 @@ public interface PaintInterface extends java.rmi.Remote {
 	*/
 	public int criarQuadro(String _nomeDoQuadro, String _nomeDoUsuario)
 		throws java.rmi.RemoteException;
+	
+	public void desenharReta(String _nomeDoQuadro, String _nomeDoUsuario, int _CliqueX, int _CliqueY, int ultimoCliqueX, int ultimoCliqueY)
+		throws java.rmi.RemoteException;
+
 	/*
 	** Somente para fins de teste
 	*/
-	public int[] getArray () 
+	public int[] getImagem (String _nomeDoQuadro) 
 		throws java.rmi.RemoteException;
 }

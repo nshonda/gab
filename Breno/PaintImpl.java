@@ -76,6 +76,10 @@ public class PaintImpl extends java.rmi.server.UnicastRemoteObject implements Pa
 			setCores();  																/* Atribui ao vetor, as cores disponíveis para desenhar no quadro. */
 			usuarios = new Hashtable();													/* Instancia a tabela Hash que armazenará os usuários do quadro.   */
 			imagemDoQuadro = new BufferedImage(800, 600, BufferedImage.TYPE_INT_RGB);	/* Imagem que será compartilhada por todos os usuários do quadro.  */
+			Graphics2D xpto = imagemDoQuadro.createGraphics();
+			xpto.setPaint (Color.white);
+			xpto.fillRect ( 0, 0, imagemDoQuadro.getWidth(), imagemDoQuadro.getHeight());
+			xpto.dispose();
 		}
 
 		void setCores()
@@ -85,11 +89,10 @@ public class PaintImpl extends java.rmi.server.UnicastRemoteObject implements Pa
 			cores[5] = Color.PINK;  cores[6] = Color.YELLOW; cores[7] = Color.DARK_GRAY; cores[8] = Color.LIGHT_GRAY; cores[9] = Color.CYAN;
 		}
 	}
-	
+
 	private class Usuario 
 	{
 		Color corDoTraco;	/* Cor das retas que serão desenhadas pelo usuário. */
-		Point ultimoPonto;	/* Último ponto que foi desenhado no Quadro 		*/
 
 		Usuario(Color corEscolhida)
 		{
@@ -98,13 +101,24 @@ public class PaintImpl extends java.rmi.server.UnicastRemoteObject implements Pa
 		}
 	}
 
+	public void desenharReta(String _nomeDoQuadro, String _nomeDoUsuario, int _CliqueX, int _CliqueY, int ultimoCliqueX, int ultimoCliqueY)
+	{
+		Quadro quadroTemp = quadros.get(_nomeDoQuadro);
+		Usuario usuarioTemp = quadroTemp.usuarios.get(_nomeDoUsuario);
+		
+		Graphics2D xpto = quadroTemp.imagemDoQuadro.createGraphics();
+		xpto.setPaint (usuarioTemp.corDoTraco);
+		xpto.drawLine(_CliqueX, _CliqueY, ultimoCliqueX, ultimoCliqueY);
+		xpto.dispose();
+	}
+
 	public int criarQuadro(String _nomeDoQuadro, String _nomeDoUsuario)
     {
     	try
     	{
-	    	Quadro quadroCriado = new Quadro();											/* Instancia um novo quadro 							*/
-	    	quadroCriado.ultimaCorAtribuida = quadroCriado.ultimaCorAtribuida + 1;  /* Incrementa +1 na última cor atribuída à um usuário 	*/
-	    	Usuario usuarioCriado = new Usuario(quadroCriado.cores[quadroCriado.ultimaCorAtribuida]);	/* Instancia um novo cliente							*/
+	    	Quadro quadroCriado = new Quadro();														  		/* Instancia um novo quadro 							*/
+	    	quadroCriado.ultimaCorAtribuida = quadroCriado.ultimaCorAtribuida + 1; 					  	    /* Incrementa +1 na última cor atribuída à um usuário 	*/
+	    	Usuario usuarioCriado = new Usuario(quadroCriado.cores[quadroCriado.ultimaCorAtribuida % 10]);	/* Instancia um novo cliente							*/
 	    	
 	    	quadroCriado.usuarios.put(_nomeDoUsuario, usuarioCriado);
 	    	quadros.put(_nomeDoQuadro, quadroCriado);
@@ -121,21 +135,20 @@ public class PaintImpl extends java.rmi.server.UnicastRemoteObject implements Pa
         super ();
 	}
     
-	public int[] getArray (/* Futuramente será o nome do quadro */)
+	public int[] getImagem (String _nomeDoQuadro)
     {
-    	g2d.setPaint (Color.white);
-		g2d.fillRect ( 0, 0, off_Image.getWidth(), off_Image.getHeight() );
-        g2d.setColor(Color.red);
-        g2d.drawLine(0, 0, 100, 100);
-        g2d.setColor(Color.blue);
-        g2d.drawLine(0, 0, 200, 300);
-        //g2d.setBackground(Color.white);
-        g2d.dispose();
-
-        ManipularImagem _manipula = new ManipularImagem(off_Image);
-        System.out.println ("Chamou o getArray!");
-
+    	Quadro quadroTemp = quadros.get(_nomeDoQuadro);
+        ManipularImagem _manipula = new ManipularImagem(quadroTemp.imagemDoQuadro);
+        System.out.println ("Chamou o getImagem do quadro => " + _nomeDoQuadro);
         return _manipula.getImagem();
+
+		// g2d.setPaint (Color.white);
+		// g2d.fillRect ( 0, 0, off_Image.getWidth(), off_Image.getHeight() );
+		// g2d.setColor(Color.red);
+		// 
+		// g2d.setColor(Color.blue);
+		// g2d.drawLine(0, 0, 200, 300);
+		// g2d.dispose();
 	}
     
     /*
