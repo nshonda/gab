@@ -30,6 +30,17 @@ import java.io.Serializable;
 
 public interface PaintInterface extends java.rmi.Remote {
 
+	/*
+	** Método para criação de um quadro
+	** Argumentos:
+	**     0 - Nome do Quadro
+	**     1 - Nome do Usuário
+	*/
+	public int criarQuadro(String, String);
+
+	/*
+	** Somente para fins de teste
+	*/
 	public int[] getArray () 
 		throws java.rmi.RemoteException;
 }

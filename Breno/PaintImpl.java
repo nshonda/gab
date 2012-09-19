@@ -57,46 +57,72 @@ import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.awt.image.Raster;
 
-public class PaintImpl
-	extends java.rmi.server.UnicastRemoteObject
-	implements PaintInterface {
+public class PaintImpl extends java.rmi.server.UnicastRemoteObject implements PaintInterface {
 
 	BufferedImage off_Image = new BufferedImage(800, 600, BufferedImage.TYPE_INT_RGB);
 	Graphics2D g2d = off_Image.createGraphics();
+	ArrayList<Quadro> quadros = new ArrayList<Quadro>();
+	
+
+	private class Quadro 
+	{
+		private HashTable <String, Usuario> usuarios;    /* Quantidade de Usuários no Quadro */
+		public BufferedImagem imagemDoQuadro;
+		public class Usuario 
+		{
+			Color corDoTraco = null;
+			Point ultimoPonto = null;
+
+			Usuario()
+		}
+	}
 
 	public PaintImpl () throws java.rmi.RemoteException 
-        {
-            super ();
+    {
+        super ();
 	}
 
-        
+    public int criarQuadro(String _nomeDoQuadro, String _nomeDoUsuario)
+    {
+
+    	return null; /* Provisório */
+    }
     
 	public int[] getArray (/* Futuramente será o nome do quadro */)
-        {
+    {
+    	g2d.setPaint (Color.white);
+		g2d.fillRect ( 0, 0, off_Image.getWidth(), off_Image.getHeight() );
+        g2d.setColor(Color.red);
+        g2d.drawLine(0, 0, 100, 100);
+        g2d.setColor(Color.blue);
+        g2d.drawLine(0, 0, 200, 300);
+        //g2d.setBackground(Color.white);
+        g2d.dispose();
 
-            g2d.setColor(Color.red);
-            g2d.drawLine(0, 0, 100, 100);
-            g2d.setColor(Color.blue);
-            g2d.drawLine(0, 0, 200, 300);
-            g2d.dispose();
+        ManipularImagem _manipula = new ManipularImagem(off_Image);
+        System.out.println ("Chamou o getArray!");
 
-            ManipularImagem _manipula = new ManipularImagem(off_Image);
-            System.out.println ("Chamou o getArray!");
-
-            return _manipula.getImagem();
+        return _manipula.getImagem();
 	}
+    
+    /*
+    ** Classe:    ManipularImagem
+    ** Descrição: Basicamente ela transforma um BufferedImage em um vetor de int
+    **			  para que o mesmo possa ser enviado para o cliente e interpreta-
+    **			  do corretamente pelo mesmo.
+    */
+    private class ManipularImagem implements Serializable
+    {
+        int [] _imagemArray;   /* Array que será retornado ou atribuido algum valor */
         
-        private class ManipularImagem implements Serializable
+        ManipularImagem(BufferedImage imagem)
         {
-            int [] _imagemArray;
-            ManipularImagem(BufferedImage imagem)
-            {
-                _imagemArray = imagem.getRGB(0, 0, 800, 600, _imagemArray, 0, 800);
-            } /* Construtor Vazio */
+            _imagemArray = imagem.getRGB(0, 0, 800, 600, _imagemArray, 0, 800);
+        } /* Construtor Vazio */
 
-            int [] getImagem()
-            {
-                return _imagemArray;
-            }
+        int [] getImagem()
+        {
+            return _imagemArray;
         }
+    }
 }

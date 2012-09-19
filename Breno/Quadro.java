@@ -60,15 +60,36 @@ public class Quadro extends JPanel
     BufferedImage _imgRetornado = new BufferedImage(800, 600, BufferedImage.TYPE_INT_RGB);
     PaintInterface _interface;
     
-    public Quadro() throws Exception
+    public Quadro(String _nomeDoQuadro, String _nomeDoUsuario) throws Exception
     {
         setLayout(null);            /* Definindo nenhum layout para o Painel        */
         setSize(800, 600);          /* Definindo o tamanho do Painel                */
         setVisible(true);           /* Deixando o Painel visível                    */
         setBackground(Color.white); /* Definindo o plano de fundo com a cor branca  */
 
+        /* 
+        ** Instancia o objeto que cuida de toda parte de segurança sem essa instância
+        ** a classe do RMI não conseguirá efetuar o download dos headers das classes
+        ** remotas, assim não podendo efetuar nenhuma chamada de um método remoto
+        */
         System.setSecurityManager(new RMISecurityManager());
+
+        /*
+        ** A classe Naming fornece métodos para persistência ou obtenção de referências
+        ** para objetos remotos em um registro de um objeto remoto. Passando como parâ-
+        ** metro o host onde os métodos remotos estão implementados.
+        **
+        ** _interface recebe uma referencia de um objeto do tipo Remote ( é um Stub ) 
+        ** e é efetuado um Cast para o tipo PaintInterface, assim podemos efetuar cha-
+        ** madas de métodos remotos através desta _interface.
+        */
         _interface = (PaintInterface) Naming.lookup ("rmi://localhost/PaintService");
+
+        _interface.criarQuadro(_nomeDoQuadro, _nomeDoUsuario);
+
+        
+        (new Thread(new ThreadQueAtualizaQuadro())).start();
+
 
         addMouseListener(new MouseAdapter()
         {
@@ -96,13 +117,39 @@ public class Quadro extends JPanel
         });
     };
 
+
+    class ThreadQueAtualizaQuadro implements Runnable
+    {
+        public void run()
+        {
+            try
+            {
+                while(true)
+                {
+                    _imgRetornado.setRGB(0, 0, 800, 600, _interface.getArray(), 0, 800);  
+                    repaint();
+                    Thread.sleep(500);    
+                }
+            }
+            catch(Exception exp)
+            {
+                System.out.println("Erro - Catch ThreadQueAtualizaQuadro.");
+            }
+        }
+    }
+
     @Override
     protected void paintComponent(Graphics g)
     {
-
+        System.out.println("Passou no paintComponent");
         super.paintComponent(g);
-        g.drawImage(_imgRetornado, 0, 0, this);
+        Graphics2D g2d = (Graphics2D) g.create();
         
+        g2d.drawImage(_imgRetornado, 0, 0, 800, 600, Color.white, null);
+        
+
+
+
         // Graphics2D g2d = (Graphics2D) g.create();
 
         // if (pointList.size() < 2)

@@ -100,21 +100,20 @@ public class LinePanel extends JPanel
         @Override
         public void actionPerformed(ActionEvent ae)
         {
-            
             String _nomeDoQuadro;
+            String _nomeDoUsuario;
             _nomeDoQuadro = JOptionPane.showInputDialog("Insira um nome para o quadro");
+            _nomeDoUsuario = JOptionPane.showInputDialog("Insira seu nome");
             
             try
             {
-                new criarQuadro(_nomeDoQuadro).setVisible(true);    
+                new criarQuadro(_nomeDoQuadro, _nomeDoUsuario).setVisible(true);    
             }
             catch(Exception e)
             {
                 System.out.println("Entrou no Catch da classe criar");
             }
-            
         }
-        
     }
 
     private class entrar implements ActionListener{

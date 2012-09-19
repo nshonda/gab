@@ -46,20 +46,21 @@ import javax.swing.*;                   /* #TODO: Ver documentação do JAVA */
 import java.io.IOException;
 
 
+
 public class criarQuadro extends JFrame
 {
 	List<Point> pointList = new ArrayList<Point>();
 
-	public criarQuadro(String _nomeQuadro) throws Exception
+	public criarQuadro(String _nomeDoQuadro, String _nomeDoUsuario) throws Exception
 	{
-		setTitle("Paint Distribuído || Quadro: " + _nomeQuadro);    /* Define o Título da Janela que contêm o JFrame / JPanel */
+		setTitle("Paint Distribuído || Usuário: " + _nomeUsuario + " Quadro: " + _nomeQuadro);    /* Define o Título da Janela que contêm o JFrame / JPanel */
         setSize(800, 600);    /* Define o tamanho do JFrame */
         setLocation(((Toolkit.getDefaultToolkit().getScreenSize().width  / 2) - (getWidth() / 2)),
                     ((Toolkit.getDefaultToolkit().getScreenSize().height / 2) - (getHeight() / 2)));    /* Inicializa o frame no centro da Tela */
 
         try
         {
-        	add(new Quadro()); 		/* Cria um Painel para Desenhar 				*/
+        	add(new Quadro(_nomeDoQuadro, _nomeDoUsuario));    /* Instancia um novo Quadro */
         }
         catch (IOException e)
 		{
