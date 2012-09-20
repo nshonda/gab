@@ -116,13 +116,29 @@ public class PaintImpl extends java.rmi.server.UnicastRemoteObject implements Pa
     {
     	try
     	{
-	    	Quadro quadroCriado = new Quadro();														  		/* Instancia um novo quadro 							*/
-	    	quadroCriado.ultimaCorAtribuida = quadroCriado.ultimaCorAtribuida + 1; 					  	    /* Incrementa +1 na última cor atribuída à um usuário 	*/
-	    	Usuario usuarioCriado = new Usuario(quadroCriado.cores[quadroCriado.ultimaCorAtribuida % 10]);	/* Instancia um novo cliente							*/
+    		if(quadros.get(_nomeDoQuadro) == null)
+    		{
+    			Quadro quadroCriado = new Quadro(_nomeDoQuadro, _nomeDoUsuario);														  		/* Instancia um novo quadro 							*/
+	    		quadroCriado.ultimaCorAtribuida = quadroCriado.ultimaCorAtribuida + 1; 					  	    /* Incrementa +1 na última cor atribuída à um usuário 	*/
+	    		Usuario usuarioCriado = new Usuario(quadroCriado.cores[quadroCriado.ultimaCorAtribuida % 10]);	/* Instancia um novo cliente							*/
 	    	
-	    	quadroCriado.usuarios.put(_nomeDoUsuario, usuarioCriado);
-	    	quadros.put(_nomeDoQuadro, quadroCriado);
-	    	return 1;
+		    	quadroCriado.usuarios.put(_nomeDoUsuario, usuarioCriado);
+		    	quadros.put(_nomeDoQuadro, quadroCriado);
+
+    			return 1;
+    		}
+    		else
+    		{
+    			if(quadros.usuario.get(_nomeDoUsuario) == null)
+    			{
+    				Usuario usuarioCriado = new Usuario(quadroCriado.cores[quadroCriado.ultimaCorAtribuida % 10]);	/* Instancia um novo cliente							*/
+    				return 1;	
+    			}
+    			
+	    		
+
+    		}
+	    	
     	}
     	catch(Exception e)
     	{
