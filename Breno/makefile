@@ -3,6 +3,7 @@ SERVER=PaintServer
 IMPL=PaintImpl
 INTERFACE=PaintInterface
 REG=rmiregistry
+
 default:
 	javac *.java
 	rmic $(IMPL)
@@ -19,3 +20,6 @@ clean:
 teste:
 	javac *.java
 	java PaintClient
+
+kill:
+	pkill rmiregistry
