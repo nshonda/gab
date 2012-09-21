@@ -107,6 +107,7 @@ public class PaintImpl extends java.rmi.server.UnicastRemoteObject implements Pa
 		Usuario usuarioTemp = quadroTemp.usuarios.get(_nomeDoUsuario);
 		
 		Graphics2D xpto = quadroTemp.imagemDoQuadro.createGraphics();
+		xpto.setStroke(new BasicStroke (5.0f));
 		xpto.setPaint (usuarioTemp.corDoTraco);
 		xpto.drawLine(_CliqueX, _CliqueY, ultimoCliqueX, ultimoCliqueY);
 		xpto.dispose();
@@ -118,7 +119,7 @@ public class PaintImpl extends java.rmi.server.UnicastRemoteObject implements Pa
     	{
     		if(quadros.get(_nomeDoQuadro) == null)
     		{
-    			Quadro quadroCriado = new Quadro(_nomeDoQuadro, _nomeDoUsuario);														  		/* Instancia um novo quadro 							*/
+    			Quadro quadroCriado = new Quadro();														  		/* Instancia um novo quadro 							*/
 	    		quadroCriado.ultimaCorAtribuida = quadroCriado.ultimaCorAtribuida + 1; 					  	    /* Incrementa +1 na última cor atribuída à um usuário 	*/
 	    		Usuario usuarioCriado = new Usuario(quadroCriado.cores[quadroCriado.ultimaCorAtribuida % 10]);	/* Instancia um novo cliente							*/
 	    	
@@ -129,14 +130,19 @@ public class PaintImpl extends java.rmi.server.UnicastRemoteObject implements Pa
     		}
     		else
     		{
-    			if(quadros.usuario.get(_nomeDoUsuario) == null)
+    			Quadro quadroExistente = quadros.get(_nomeDoQuadro);
+    			if(quadroExistente.usuarios.get(_nomeDoUsuario) == null)
     			{
-    				Usuario usuarioCriado = new Usuario(quadroCriado.cores[quadroCriado.ultimaCorAtribuida % 10]);	/* Instancia um novo cliente							*/
+    				quadroExistente.ultimaCorAtribuida = quadroExistente.ultimaCorAtribuida + 1; 					  	    /* Incrementa +1 na última cor atribuída à um usuário 	*/
+    				Usuario usuarioCriado = new Usuario(quadroExistente.cores[quadroExistente.ultimaCorAtribuida % 10]);	/* Instancia um novo cliente							*/
+    				quadroExistente.usuarios.put(_nomeDoUsuario, usuarioCriado);
     				return 1;	
     			}
-    			
-	    		
+    			else
+    			{
 
+    			}
+    			return 1;
     		}
 	    	
     	}

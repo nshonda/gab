@@ -63,16 +63,12 @@ public class LinePanel extends JPanel
         setVisible(true);           /* Deixando o Painel visível                    */
         setBackground(Color.white); /* Definindo o plano de fundo com a cor branca  */
 
-        JButton _btnCriar  = new JButton("Criar" );             /* Criando o botão para CRIAR um novo Quadro                    */
-        JButton _btnEntrar = new JButton("Entrar");             /* Criando um botão para ENTRAR em um Quadro já existente       */
+        JButton _btnCriar  = new JButton("Desenhar!" );             /* Criando o botão para CRIAR um novo Quadro                    */
+        
         _btnCriar.setFont (new Font("Arial", Font.BOLD, 20));   /* Define a fonte como Arial, negrito, tamanho 20               */
-        _btnEntrar.setFont(new Font("Arial", Font.BOLD, 20));   /* Define a fonte como Arial, negrito, tamanho 20               */
-        _btnCriar.setBounds (130, 144, 136, 72);                /* Define a posição do botão (x, y, width, height)              */
-        _btnEntrar.setBounds(363, 144, 136, 72);                /* Define a posição do botão (x, y, width, height)              */
+        _btnCriar.setBounds (225, 140, 156, 72);                /* Define a posição do botão (x, y, width, height)              */
         _btnCriar.addActionListener(new criar());               /* Adiciona funcionalidade de instanciar a classe criarQuadro   */
-        _btnEntrar.addActionListener(new entrar());             /* Adiciona funcionalidade de instanciar a classe criarQuadro   */
         add(_btnCriar);                                         /* Adiciona o botão ao Painel                                   */
-        add(_btnEntrar);                                        /* Adiciona o botão ao Painel                                   */
 
         // addMouseListener(new MouseAdapter()
         // {
@@ -102,7 +98,7 @@ public class LinePanel extends JPanel
         {
             String _nomeDoQuadro;
             String _nomeDoUsuario;
-            _nomeDoQuadro = JOptionPane.showInputDialog("Insira um nome para o quadro");
+            _nomeDoQuadro = JOptionPane.showInputDialog("Insira o nome do quadro");
             _nomeDoUsuario = JOptionPane.showInputDialog("Insira seu nome");
             
             try
@@ -116,14 +112,6 @@ public class LinePanel extends JPanel
         }
     }
 
-    private class entrar implements ActionListener{
-
-        @Override
-        public void actionPerformed(ActionEvent ae) {
-            
-        }
-        
-    }
 
     /**
      * Esse método será chamado toda vez que o componente precisar ser repintado.
